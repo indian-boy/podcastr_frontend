@@ -1,7 +1,19 @@
-import '../styles/global.scss'
+import Header from '@components/Header'
+import Player from '@components/Player'
 
-function MyApp({ Component, pageProps }): JSX.Element {
-  return <Component {...pageProps} />
+import '../styles/global.scss'
+import styles from '../styles/app.module.scss'
+
+function PodcastrApp({ Component, pageProps }): JSX.Element {
+  return (
+    <div className={styles.appContainer}>
+      <main>
+        <Header />
+        <Component {...pageProps} />
+      </main>
+      <Player />
+    </div>
+  )
 }
 
-export default MyApp
+export default PodcastrApp

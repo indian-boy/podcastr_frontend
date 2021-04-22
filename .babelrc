@@ -19,7 +19,8 @@
           "@data": "./src/data",
           "@typeDefs": "./src/types",
           "@generated": "./src/generated",
-          "@utils": "./src/utils"
+          "@utils": "./src/utils",
+          "@public": "./public"
         }
       }
     ]
