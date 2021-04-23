@@ -3,16 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently 'yarn server:run' 'next dev' --kill-others --kill-others-on-fail",
+    "dev": "concurrently \"yarn server:run\" \"next dev\" --kill-others-on-fail --success all",
     "build:dev": "yarn server:run & next build && lsof -i tcp:3333 -t | xargs kill -s stop",
     "build": "next build",
     "start": "next start",
     "prettier:fix": "prettier --write \"./{src,}/**/*.{ts,js,jsx,tsx}\"",
     "prettier:check": "prettier --list-different \"./{src,}/**/*.{ts,js,jsx,tsx}\"",
     "prepare": "husky install",
-    "server:run": "json-server server.json -w -d 750 -p 3333"
+    "server:run": "json-server server.json -w -d 750 -p 3333",
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
+    "lint": "eslint --ext js,jsx,ts,tsx --fix ."
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "date-fns": "^2.21.1",
     "husky": ">=6",
     "next": "10.1.3",

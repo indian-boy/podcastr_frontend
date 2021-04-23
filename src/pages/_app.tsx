@@ -4,7 +4,7 @@ import Player from '@components/Player'
 import '../styles/global.scss'
 import styles from '../styles/app.module.scss'
 
-function PodcastrApp({ Component, pageProps }): JSX.Element {
+function PodcastrApp(): JSX.Element {
   return (
     <div className={styles.appContainer}>
       <main>
