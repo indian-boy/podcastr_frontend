@@ -5,8 +5,9 @@ import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
 import ConvertDurationFromTimeString from '@utils/helpers/ConvertDurationFromTimeString'
-import { getEpisodeById } from '@api/episodes.api'
+import { getEpisodeById, getEpisodes } from '@api/episodes.api'
 import { EpisodeModel } from '@models/episode'
+import ApiSortOrder from '@enums/api/ApiSortOrder.enum'
 import styles from './styles.module.scss'
 
 type EpisodeProps = {
@@ -41,10 +42,24 @@ export default function Episode({ episode }: EpisodeProps): JSX.Element {
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: [],
-  fallback: 'blocking',
-})
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { data } = await getEpisodes({
+    _limit: 2,
+    _sort: 'published_at',
+    _order: ApiSortOrder.Desc,
+  })
+
+  const paths = data.map((episode) => ({
+    params: {
+      slug: episode.id,
+    },
+  }))
+
+  return {
+    paths,
+    fallback: 'blocking',
+  }
+}
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug } = params as { slug: string }

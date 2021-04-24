@@ -11,7 +11,10 @@ export function RemoveEmptiesFromObject(data: any): any {
 export function RemoveEmptiesFromObjectRecursively(obj: any): any {
   return Object.fromEntries(
     Object.entries(obj)
-      .filter(([_, v]) => v != null)
-      .map(([k, v]) => [k, v === Object(v) ? RemoveEmptiesFromObjectRecursively(v) : v])
+      .filter(([key, value]) => value !== null || value !== undefined)
+      .map(([key, value]) => [
+        key,
+        value === Object(value) ? RemoveEmptiesFromObjectRecursively(value) : value,
+      ])
   )
 }

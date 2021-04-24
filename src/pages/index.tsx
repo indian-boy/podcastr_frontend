@@ -3,11 +3,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { useContext } from 'react'
 
 import { EpisodeModel } from '@models/episode'
 import { getEpisodes } from '@api/episodes.api'
 import ApiSortOrder from '@enums/api/ApiSortOrder.enum'
 import ConvertDurationFromTimeString from '@utils/helpers/ConvertDurationFromTimeString'
+import PlayerContext from '@contexts/PlayerContext'
+
 import styles from './styles.module.scss'
 
 type HomeProps = {
@@ -16,6 +19,8 @@ type HomeProps = {
 }
 
 export default function Home({ allEpisodes, latestEpisodes }: HomeProps): JSX.Element {
+  const { play } = useContext(PlayerContext)
+
   return (
     <div className={styles.homePage}>
       <section className={styles.latestEpisodes}>
@@ -38,7 +43,7 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps): JSX.El
                 <span>{episode.published_at_formatted}</span>
                 <span>{episode.file.duration_as_time_string}</span>
               </div>
-              <button type="button">
+              <button type="button" onClick={() => play(episode)}>
                 <img src="/play-green.svg" alt="Tocar episódio" />
               </button>
             </li>

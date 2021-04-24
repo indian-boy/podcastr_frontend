@@ -16,7 +16,7 @@
           "@constants": "./src/constants",
           "@shared": "./src/shared",
           "@enums": "./src/enums",
-          "@context": "./src/context",
+          "@contexts": "./src/contexts",
           "@queries": "./src/queries",
           "@data": "./src/data",
           "@typeDefs": "./src/types",
