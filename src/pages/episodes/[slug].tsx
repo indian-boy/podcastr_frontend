@@ -3,11 +3,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import Head from 'next/head'
 
 import ConvertDurationFromTimeString from '@utils/helpers/ConvertDurationFromTimeString'
 import { getEpisodeById, getEpisodes } from '@api/episodes.api'
 import { EpisodeModel } from '@models/episode'
 import ApiSortOrder from '@enums/api/ApiSortOrder.enum'
+import { usePlayer } from '@contexts/PlayerContext'
 import styles from './styles.module.scss'
 
 type EpisodeProps = {
@@ -15,8 +17,12 @@ type EpisodeProps = {
 }
 
 export default function Episode({ episode }: EpisodeProps): JSX.Element {
+  const { play, isPlaying } = usePlayer()
   return (
     <div className={styles.episode}>
+      <Head>
+        <title>{episode.title} | Podcastr</title>
+      </Head>
       <div className={styles.thumbnailContainer}>
         <Link href="/">
           <button type="button">
@@ -24,8 +30,12 @@ export default function Episode({ episode }: EpisodeProps): JSX.Element {
           </button>
         </Link>
         <Image width={700} height={160} src={episode.thumbnail} objectFit="cover" />
-        <button type="button">
-          <img src="/play.svg" alt="Tocar episódio" />
+        <button type="button" onClick={() => play(episode)}>
+          {isPlaying ? (
+            <img src="/pause.svg" alt="Pausar" />
+          ) : (
+            <img src="/play.svg" alt="Tocar episódio" />
+          )}
         </button>
       </div>
       <header>
